@@ -32,6 +32,7 @@ public class QueryExecutor {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             String query = "SELECT * FROM USERS where email='" + useremail + "'";
+            System.out.println(query);
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
             	userdata[0] = resultSet.getString(1);
