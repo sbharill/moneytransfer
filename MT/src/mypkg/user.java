@@ -63,6 +63,12 @@ public List<UsedLeave> getUsedLeaves(){
 	return usedLeaves;
 }
 
+public List<SubmittedMT> getSubmittedMTs(){
+	QueryExecutor qe = new QueryExecutor();
+	List<SubmittedMT> SubmittedMTs = qe.returnUserSubmittedMTs(this.username);
+	return SubmittedMTs;
+}
+
 public List<UnUsedLeave> getUnUsedLeaves(){
 	QueryExecutor qe = new QueryExecutor();
 	List<UnUsedLeave> unUsedLeaves = qe.returnUserUnUsedLeaves(this.username);

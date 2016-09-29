@@ -55,6 +55,47 @@ public class QueryExecutor {
         }
     }
 
+    public List<SubmittedMT> returnUserSubmittedMTs(String useremail){
+    	List<SubmittedMT> smtc = new ArrayList<SubmittedMT>();
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            //String query = "SELECT idusedleaves, email,type,fromdate,todate,days,approved,idmanager FROM ebookshop.users, ebookshop.usedleaves, ebookshop.leavetype where ebookshop.leavetype.idleavetype=ebookshop.usedleaves.idleavetype and ebookshop.users.idusers=ebookshop.usedleaves.iduser and email='" + useremail + "'";
+            
+            String query = "SELECT idsubmittedmts, idsubmittedby,idfromcountry,idtocountry,beforedatemt,c1.name as fromcountry,c2.name as tocountry, email, amount FROM users, submittedmts, countries c1, countries c2 where users.idusers=submittedmts.idsubmittedby and c1.idcountry=submittedmts.idfromcountry and c2.idcountry=submittedmts.idtocountry and email='" + useremail + "'";
+            
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+            	SubmittedMT smt = new SubmittedMT();
+            	smt.setIdSubmittedMT(resultSet.getInt(1));
+            	smt.setIdSubmittedBy(resultSet.getString(2));
+            	smt.setIdFromCountry(resultSet.getString(3));
+            	smt.setIdToCountry(resultSet.getString(4));
+            	smt.setBeforeDateMT(resultSet.getString(5));
+            	smt.setFromCountry(resultSet.getString(6));
+            	smt.setToCountry(resultSet.getString(7));
+            	smt.setEmailSubmittedBy(resultSet.getString(8));
+            	smt.setAmount(resultSet.getInt(9));            	
+            	smtc.add(smt);
+            }
+        	return smtc;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+        	return smtc;
+        	}
+        	finally {
+        	try { 
+        		if(null!=resultSet)resultSet.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }      
+    
+    
     public List<UsedLeave> returnUserUsedLeaves(String useremail){
     	List<UsedLeave> ulc = new ArrayList<UsedLeave>();
         ResultSet resultSet = null;

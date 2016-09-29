@@ -30,7 +30,6 @@ public class ControllerServlet extends HttpServlet {
       user currUser = (user) session.getAttribute("user");
       if(currUser == null){
           String useremail = request.getParameter("useremail");
-          System.out.println("---<<"+useremail);
           String userpassword = request.getParameter("userpassword");
           if(useremail == null || useremail.equals("")){
         	  nextPage = "/login.jsp";
@@ -39,13 +38,14 @@ public class ControllerServlet extends HttpServlet {
         	  user usr = new user(useremail, userpassword);
         	  if (usr.verifyPassword()){
         		  session.setAttribute("user", usr);
-        		  List<UsedLeave> usedLeaves = (ArrayList<UsedLeave>) usr.getUsedLeaves();
-        		  List<UnUsedLeave> unUsedLeaves = (ArrayList<UnUsedLeave>) usr.getUnUsedLeaves();
-        		  List<ApproveLeave> approveLeaves = (ArrayList<ApproveLeave>) usr.getApproveLeaves();
-        		  session.setAttribute("usedLeaves", usedLeaves);
-        		  session.setAttribute("unUsedLeaves", unUsedLeaves);
-        		  session.setAttribute("approveLeaves", approveLeaves);
-            	  nextPage = "/showLeaves.jsp";
+        		  List<SubmittedMT> submittedMTs = (ArrayList<SubmittedMT>) usr.getSubmittedMTs();
+        		  //List<UnUsedLeave> unUsedLeaves = (ArrayList<UnUsedLeave>) usr.getUnUsedLeaves();
+        		  //List<ApproveLeave> approveLeaves = (ArrayList<ApproveLeave>) usr.getApproveLeaves();
+        		  session.setAttribute("submittedMTs", submittedMTs);
+        		  //session.setAttribute("unUsedLeaves", unUsedLeaves);
+        		  //session.setAttribute("approveLeaves", approveLeaves);
+            	  //nextPage = "/showLeaves.jsp";
+        		  nextPage = "/showHome.jsp";
         	  }
         	  else{
          		  nextPage = "/login.jsp";
