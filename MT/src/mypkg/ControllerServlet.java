@@ -24,6 +24,7 @@ public class ControllerServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       // Retrieve the current session, or create a new session if no session exists.
       HttpSession session = request.getSession(true);
+      System.out.println("Session Found");
       String nextPage = ""; 
       // Retrieve the shopping cart of the current session.
       //List<CartItem> theCart = (ArrayList<CartItem>) session.getAttribute("cart");
