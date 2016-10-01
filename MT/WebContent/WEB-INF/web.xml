@@ -10,12 +10,16 @@
     </servlet>
   <servlet-mapping>
     <servlet-name>Controller</servlet-name>
-    <url-pattern>/shopping</url-pattern>
+    <url-pattern>/process</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Controller</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/signup</url-pattern>
+  </servlet-mapping>  
   <servlet-mapping>
     <servlet-name>Test</servlet-name>
     <url-pattern>/test</url-pattern>
@@ -25,7 +29,7 @@
     <session-timeout>30</session-timeout>
   </session-config>
   <welcome-file-list>
-    <welcome-file>shopping</welcome-file>
+    <welcome-file>process</welcome-file>
   </welcome-file-list>
 <resource-ref>
     <description>DB Connection</description>

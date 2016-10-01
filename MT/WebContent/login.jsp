@@ -11,7 +11,12 @@
       <form name="login" action="login" method="POST">
          User Email: <input type="text" name="useremail">
          User Password: <input type="password" name="userpassword">
+         <input type="hidden" name="todo" value="login">
          <input type="submit" value="Login">
+      </form>
+      <form name="signup" action="signup" method="POST">
+         <input type="hidden" name="todo" value="gotosignup">
+         <input type="submit" value="Sign Up">
       </form>
         <%
         String error = (String)session.getAttribute("error");
@@ -28,7 +33,24 @@
 		<%=session.getAttribute("error")%>
 		</p>
 		<%} 
-		session.invalidate();
+		//session.invalidate();
 		%>
+        <%
+        String message = (String)session.getAttribute("message");
+        if(message == null){
+        %>
+		<p>
+		
+		</p>
+        <%
+        }        
+        else{
+        %>
+		<p>
+		<%=session.getAttribute("message")%>
+		</p>
+		<%} 
+		//session.invalidate();
+		%>		
 </body>
 </html>

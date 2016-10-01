@@ -24,43 +24,68 @@ public class ControllerServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       // Retrieve the current session, or create a new session if no session exists.
       HttpSession session = request.getSession(true);
-      System.out.println("Session Found");
       String nextPage = ""; 
       // Retrieve the shopping cart of the current session.
       //List<CartItem> theCart = (ArrayList<CartItem>) session.getAttribute("cart");
-      user currUser = (user) session.getAttribute("user");
+      User currUser = (User) session.getAttribute("user");
       if(currUser == null){
-          String useremail = request.getParameter("useremail");
-          String userpassword = request.getParameter("userpassword");
-          if(useremail == null || useremail.equals("")){
-        	  nextPage = "/login.jsp";
-          }
-          else{
-        	  user usr = new user(useremail, userpassword);
-        	  if (usr.verifyPassword()){
-        		  session.setAttribute("user", usr);
-        		  List<SubmittedMT> submittedMTs = (ArrayList<SubmittedMT>) usr.getSubmittedMTs();
-        		  //List<UnUsedLeave> unUsedLeaves = (ArrayList<UnUsedLeave>) usr.getUnUsedLeaves();
-        		  //List<ApproveLeave> approveLeaves = (ArrayList<ApproveLeave>) usr.getApproveLeaves();
-        		  session.setAttribute("submittedMTs", submittedMTs);
-        		  //session.setAttribute("unUsedLeaves", unUsedLeaves);
-        		  //session.setAttribute("approveLeaves", approveLeaves);
-            	  //nextPage = "/showLeaves.jsp";
-        		  nextPage = "/showHome.jsp";
-        	  }
-        	  else{
-         		  nextPage = "/login.jsp";
-         		  session.setAttribute("error", "Wrong Password");
-         	  }
-          }
+    	  String todo = request.getParameter("todo");
+    	  if(todo == null){
+    		  nextPage = "/login.jsp";
+    	  }
+    	  else if (todo.equals("login")){
+	          String useremail = request.getParameter("useremail");
+	          String userpassword = request.getParameter("userpassword");
+	          if(useremail == null || useremail.equals("")){
+	        	  nextPage = "/login.jsp";
+	          }
+	          else{
+	        	  User usr = new User(useremail, userpassword);
+	        	  UserTasks usertasks = new UserTasks();
+	        	  if (usertasks.verifyPassword(usr)!=null && usertasks.verifyPassword(usr).isAuthenticated()){
+	        		  List<SubmittedMT> submittedMTs = (ArrayList<SubmittedMT>) usertasks.getSubmittedMTs(usr);
+	        		  List<MatchedMT> matchedMTs = (ArrayList<MatchedMT>) usertasks.getMatchedMTs(usr);
+	        		  session.setAttribute("submittedMTs", submittedMTs);
+	        		  session.setAttribute("matchedMTs", matchedMTs);
+	        		  session.setAttribute("user", usr);	        		  
+	        		  nextPage = "/showHome.jsp";
+	        	  }
+	        	  else{
+	         		  nextPage = "/login.jsp";
+	         		  session.setAttribute("error", "Wrong Password");
+	         	  }
+	          }
+    	  }
+    	  else if (todo.equals("gotosignup")){
+        	  SystemTasks commontasks = new SystemTasks();
+    		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
+    		  request.setAttribute("Countries", countries);
+     		  nextPage = "/signUp.jsp";
+    	  }
+    	  else if (todo.equals("signup")){
+    		  UserTasks usertasks = new UserTasks();
+    		  boolean success =  usertasks.signUp(request);
+    		  if(success) session.setAttribute("message", "SignUp success, please login.");
+    		  else session.setAttribute("message", "SignUp failure, please try again.");
+     		  nextPage = "/login.jsp";
+    	  }
       }
       else{
     	  String todo = request.getParameter("todo");
     	  if(todo == null){
     		  nextPage = "/login.jsp";
     	  }
-    	  else if (todo.equals("applyleave")){
-    		  nextPage = "/applyLeaves.jsp"; 
+    	  else if (todo.equals("createMT")){
+    		  SystemTasks commontasks = new SystemTasks();
+    		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
+    		  request.setAttribute("Countries", countries);
+            //  List<Country> cc = (List<Country>) request.getAttribute("countries");
+             // for (Country item : cc) {
+          	 // item.getIdCountry();
+             // }
+    		  
+    		  
+    		  nextPage = "/createMT.jsp"; 
     	  }
     	  else if (todo.equals("submitleave")){
     		  UsedLeave usedLeaves = new UsedLeave();

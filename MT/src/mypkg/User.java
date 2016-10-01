@@ -2,13 +2,13 @@ package mypkg;
 
 import java.util.List;
 
-public class user {
+public class User {
 private String userid;	
 private String username;
 private String userpassword;
 private boolean authenticated;
 
-public user(String username, String userpassword)
+public User(String username, String userpassword)
 {
 	this.username = username;
 	this.userpassword = userpassword;
@@ -40,23 +40,6 @@ public String getUserid() {
 	return userid;
 }
 
-public boolean verifyPassword() {
-	QueryExecutor qe = new QueryExecutor();
-	String userData[] = qe.returnUserData(this.username);
-	if(userData!=null){
-	String qePassword = userData[1];
-	String qeId = userData[0];
-	if (!qePassword.equals("") && this.userpassword.equals(qePassword)){
-		this.setUserid(qeId);
-		return true;
-	}
-	else{
-		return false;
-	}
-	}
-	else return false;
-	}
-
 public List<UsedLeave> getUsedLeaves(){
 	QueryExecutor qe = new QueryExecutor();
 	List<UsedLeave> usedLeaves = qe.returnUserUsedLeaves(this.username);
@@ -65,8 +48,14 @@ public List<UsedLeave> getUsedLeaves(){
 
 public List<SubmittedMT> getSubmittedMTs(){
 	QueryExecutor qe = new QueryExecutor();
-	List<SubmittedMT> SubmittedMTs = qe.returnUserSubmittedMTs(this.username);
-	return SubmittedMTs;
+	List<SubmittedMT> submittedMTs = qe.returnUserSubmittedMTs(this.username);
+	return submittedMTs;
+}
+
+public List<MatchedMT> getMatchedMTs(){
+	QueryExecutor qe = new QueryExecutor();
+	List<MatchedMT> matchedMTs = qe.returnUserMatchedMTs(this.username);
+	return matchedMTs;
 }
 
 public List<UnUsedLeave> getUnUsedLeaves(){

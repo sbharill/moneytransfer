@@ -8,8 +8,10 @@
 <title>MT Home</title>
 </head>
 <body>
+	  <h1>Submitted</h1>
       <table border="1" cellspacing="0" cellpadding="5">
          <tr>
+            <th>#</th>         
             <th>Email</th>
             <th>From Country</th>
             <th>To Country</th>
@@ -35,13 +37,42 @@
          //session.invalidate();
          %>
       </table>
-      <form name="applyLeave" action="shopping" method="POST">
-         <input type="hidden" name="todo" value="applyleave">
-         <input type="submit" value="Apply Leave">
+
+	  <h1>Matched</h1>
+      <table border="1" cellspacing="0" cellpadding="5">
+         <tr>
+            <th>#</th>         
+            <th>Email</th>
+            <th>From Country</th>
+            <th>To Country</th>
+            <th>Before Date</th>
+            <th>Amount</th>
+         </tr>
+         <%
+         List<MatchedMT> mmt = (List<MatchedMT>) session.getAttribute("matchedMTs");
+         int cor2 = 1;
+         for (MatchedMT item : mmt) {
+         %>
+         <tr>
+            <td><%= cor %></td>
+            <td><%= item.getEmailSubmittedBy()%></td>
+            <td><%= item.getFromCountry()%></td>
+            <td><%= item.getToCountry()%></td>
+            <td><%= item.getBeforeDateMT()%></td>
+            <td><%= item.getAmount()%></td>                                    
+          </tr>
+         <%
+         cor = cor +1;
+         } // for
+         //session.invalidate();
+         %>
+      </table>
+
+	  <br>
+
+      <form name="createMT" action="process" method="POST">
+         <input type="hidden" name="todo" value="createMT">
+         <input type="submit" value="Create MT">
       </form>
-      <form name="approveLeave" action="shopping" method="POST">
-         <input type="hidden" name="todo" value="showactionleave">
-         <input type="submit" value="Approve/Reject Leave">
-      </form>      
 </body>
 </html>

@@ -93,8 +93,100 @@ public class QueryExecutor {
             try { 
             	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
         }
-    }      
+    } 
     
+    public List<MatchedMT> returnUserMatchedMTs(String useremail){
+    	List<MatchedMT> mmtc = new ArrayList<MatchedMT>();
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            //String query = "SELECT idusedleaves, email,type,fromdate,todate,days,approved,idmanager FROM ebookshop.users, ebookshop.usedleaves, ebookshop.leavetype where ebookshop.leavetype.idleavetype=ebookshop.usedleaves.idleavetype and ebookshop.users.idusers=ebookshop.usedleaves.iduser and email='" + useremail + "'";
+            
+            String query = "SELECT s2.idsubmittedmts as idmatchedmts, s2.idsubmittedby, s2.idfromcountry, s2.idtocountry, s2.beforedatemt,c1.name as fromcountry,c2.name as tocountry, u2.email, s2.amount FROM users u1, users u2, submittedmts s1,submittedmts s2, countries c1, countries c2 where s1.idfromcountry=s2.idtocountry and s1.idtocountry=s2.idfromcountry and u1.idusers=s1.idsubmittedby and u2.idusers = s2.idsubmittedby and u1.email = '" + useremail + "'";
+            
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+            	MatchedMT mmt = new MatchedMT();
+            	mmt.setIdMatchedMT(resultSet.getInt(1));
+            	mmt.setIdSubmittedBy(resultSet.getString(2));
+            	mmt.setIdFromCountry(resultSet.getString(3));
+            	mmt.setIdToCountry(resultSet.getString(4));
+            	mmt.setBeforeDateMT(resultSet.getString(5));
+            	mmt.setFromCountry(resultSet.getString(6));
+            	mmt.setToCountry(resultSet.getString(7));
+            	mmt.setEmailSubmittedBy(resultSet.getString(8));
+            	mmt.setAmount(resultSet.getInt(9));            	
+            	mmtc.add(mmt);
+            }
+        	return mmtc;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+        	return mmtc;
+        	}
+        	finally {
+        	try { 
+        		if(null!=resultSet)resultSet.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }
+    
+    public List<Country> returnCountries() {
+    	List<Country> cc = new ArrayList<Country>();
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            //String query = "SELECT idusedleaves, email,type,fromdate,todate,days,approved,idmanager FROM ebookshop.users, ebookshop.usedleaves, ebookshop.leavetype where ebookshop.leavetype.idleavetype=ebookshop.usedleaves.idleavetype and ebookshop.users.idusers=ebookshop.usedleaves.iduser and email='" + useremail + "'";
+            
+            String query = "Select * from countries";
+            
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+            	Country c = new Country();
+            	c.setIdCountry(resultSet.getInt(1));
+            	c.setNameCountry(resultSet.getString(2));
+            	cc.add(c);
+            }
+        	return cc;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+        	return cc;
+        	}
+        	finally {
+        	try { 
+        		if(null!=resultSet)resultSet.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }     
+
+    public boolean submitSignUpData(String userData[]){
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            String query = "INSERT INTO users (firstname, lastname, email, password) VALUES ('"+userData[1]+"','"+userData[2]+"', '"+userData[3]+"','"+userData[4]+"')";
+            int rows = statement.executeUpdate(query);
+            return true;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        	}
+        	finally {
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }  
     
     public List<UsedLeave> returnUserUsedLeaves(String useremail){
     	List<UsedLeave> ulc = new ArrayList<UsedLeave>();
