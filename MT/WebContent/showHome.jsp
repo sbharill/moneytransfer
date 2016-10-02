@@ -71,7 +71,7 @@
 	  <br>
 
       <form name="createMT" action="process" method="POST">
-         <input type="hidden" name="todo" value="createMT">
+         <input type="hidden" name="todo" value="goToCreateMT">
          <input type="submit" value="Create MT">
       </form>
 </body>

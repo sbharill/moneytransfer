@@ -19,7 +19,7 @@
          <input type="submit" value="Sign Up">
       </form>
         <%
-        String error = (String)session.getAttribute("error");
+        String error = (String)request.getAttribute("error");
         if(error == null){
         %>
 		<p>
@@ -30,13 +30,14 @@
         else{
         %>
 		<p>
-		<%=session.getAttribute("error")%>
+		<%=request.getAttribute("error")%>
 		</p>
-		<%} 
-		//session.invalidate();
+		<%
+		session.invalidate();
+		} 
 		%>
         <%
-        String message = (String)session.getAttribute("message");
+        String message = (String)request.getAttribute("message");
         if(message == null){
         %>
 		<p>
@@ -47,7 +48,7 @@
         else{
         %>
 		<p>
-		<%=session.getAttribute("message")%>
+		<%=request.getAttribute("message")%>
 		</p>
 		<%} 
 		//session.invalidate();

@@ -22,8 +22,10 @@
          	<td>
          	
          	<select name="fromCountry">
+         	
             <%
             List<Country> cc = (List<Country>) request.getAttribute("Countries");
+            User usr = (User) session.getAttribute("user");
             for (Country item : cc) {
             %>
         	  <option value="<%= item.getIdCountry() %>"><%= item.getNameCountry() %></option>
@@ -53,8 +55,26 @@
          	<td><input type="text" name="beforeDate"></td>
         </tr>        
       </table>
-         <input type="hidden" name="todo" value="submitleave">
-         <input type="submit" value="Submit Leave">
+		 <input type="hidden" name="userId" value="<%= usr.getUserid()%>">
+         <input type="hidden" name="todo" value="createMT">
+         <input type="submit" value="Submit">
       </form>
+        <%
+        String message = (String)request.getAttribute("message");
+        if(message == null){
+        %>
+		<p>
+		
+		</p>
+        <%
+        }        
+        else{
+        %>
+		<p>
+		<%=request.getAttribute("message")%>
+		</p>
+		<%} 
+		//session.invalidate();
+		%>      
 </body>
 </html>

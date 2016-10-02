@@ -187,6 +187,26 @@ public class QueryExecutor {
             	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
         }
     }  
+
+    public boolean submitCreateMTData(String createMTData[]){
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            String query = "INSERT INTO submittedmts (amount, idFromCountry, idToCountry, beforeDateMT, idSubmittedBy) VALUES ('"+createMTData[0]+"','"+createMTData[1]+"', '"+createMTData[2]+"','"+createMTData[3]+"','"+createMTData[4]+"')";
+            int rows = statement.executeUpdate(query);
+            return true;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        	}
+        	finally {
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }     
     
     public List<UsedLeave> returnUserUsedLeaves(String useremail){
     	List<UsedLeave> ulc = new ArrayList<UsedLeave>();

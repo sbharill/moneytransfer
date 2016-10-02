@@ -52,7 +52,7 @@ public class ControllerServlet extends HttpServlet {
 	        	  }
 	        	  else{
 	         		  nextPage = "/login.jsp";
-	         		  session.setAttribute("error", "Wrong Password");
+	         		  request.setAttribute("error", "Wrong Password");
 	         	  }
 	          }
     	  }
@@ -65,8 +65,8 @@ public class ControllerServlet extends HttpServlet {
     	  else if (todo.equals("signup")){
     		  UserTasks usertasks = new UserTasks();
     		  boolean success =  usertasks.signUp(request);
-    		  if(success) session.setAttribute("message", "SignUp success, please login.");
-    		  else session.setAttribute("message", "SignUp failure, please try again.");
+    		  if(success) request.setAttribute("message", "SignUp success, please login.");
+    		  else request.setAttribute("message", "SignUp failure, please try again.");
      		  nextPage = "/login.jsp";
     	  }
       }
@@ -75,18 +75,22 @@ public class ControllerServlet extends HttpServlet {
     	  if(todo == null){
     		  nextPage = "/login.jsp";
     	  }
-    	  else if (todo.equals("createMT")){
+    	  else if (todo.equals("goToCreateMT")){
     		  SystemTasks commontasks = new SystemTasks();
     		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
     		  request.setAttribute("Countries", countries);
-            //  List<Country> cc = (List<Country>) request.getAttribute("countries");
-             // for (Country item : cc) {
-          	 // item.getIdCountry();
-             // }
-    		  
-    		  
     		  nextPage = "/createMT.jsp"; 
     	  }
+    	  else if (todo.equals("createMT")){
+    		  UserTasks usertasks = new UserTasks();
+    		  boolean success =  usertasks.createMT(request);
+    		  if(success) request.setAttribute("message", "Create MT success.");
+    		  else request.setAttribute("message", "Create MT failure, please try again.");
+    		  SystemTasks commontasks = new SystemTasks();
+    		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
+    		  request.setAttribute("Countries", countries);
+     		  nextPage = "/createMT.jsp";
+    	  }    	  
     	  else if (todo.equals("submitleave")){
     		  UsedLeave usedLeaves = new UsedLeave();
               String idLeave = request.getParameter("leavetype");

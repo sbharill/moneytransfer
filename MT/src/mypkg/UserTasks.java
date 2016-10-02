@@ -49,5 +49,19 @@ public class UserTasks {
 		boolean success = qe.submitSignUpData(signUpData);
 		return success;
 	
-}
+	}
+
+	public boolean createMT(HttpServletRequest request) {
+		String createMTData[] = new String[5];
+		createMTData[0] = request.getParameter("amount");
+		createMTData[1] = request.getParameter("fromCountry");
+		createMTData[2] = request.getParameter("toCountry");
+		createMTData[3] = request.getParameter("beforeDate");
+		createMTData[4] = request.getParameter("userId");		
+		
+		QueryExecutor qe = new QueryExecutor();
+		boolean success = qe.submitCreateMTData(createMTData);
+		return success;
+	
+	}
 }
