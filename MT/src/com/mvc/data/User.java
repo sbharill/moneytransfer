@@ -1,6 +1,8 @@
-package mypkg;
+package com.mvc.data;
 
 import java.util.List;
+
+import com.mvc.dao.QueryExecutor;
 
 public class User {
 private String userid;	

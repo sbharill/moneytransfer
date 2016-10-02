@@ -1,10 +1,17 @@
-package mypkg;
+package com.mvc.controller;
  
 import java.io.*;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import com.mvc.data.Country;
+import com.mvc.data.MatchedMT;
+import com.mvc.data.SubmittedMT;
+import com.mvc.data.User;
+import com.mvc.tasks.SystemTasks;
+import com.mvc.tasks.UserTasks;
  
 //@WebServlet("/shopping")  // Define URL pattern (for servlet 3.0 only)
 public class ControllerServlet extends HttpServlet {

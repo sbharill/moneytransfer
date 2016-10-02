@@ -1,4 +1,4 @@
-package mypkg;
+package com.mvc.data;
 
 public class Country {
 	public int getIdCountry() {

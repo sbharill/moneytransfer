@@ -1,4 +1,4 @@
-package mypkg;
+package com.mvc.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +8,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.mvc.data.Country;
+import com.mvc.data.MatchedMT;
+import com.mvc.data.SubmittedMT;
 
 
 public class QueryExecutor {
@@ -32,7 +36,6 @@ public class QueryExecutor {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             String query = "SELECT * FROM USERS where email='" + useremail + "'";
-            System.out.println(query);
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
             	userdata[0] = resultSet.getString(1);

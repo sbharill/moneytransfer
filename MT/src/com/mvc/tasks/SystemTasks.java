@@ -1,6 +1,9 @@
-package mypkg;
+package com.mvc.tasks;
 
 import java.util.List;
+
+import com.mvc.dao.QueryExecutor;
+import com.mvc.data.Country;
 
 public class SystemTasks {
 	

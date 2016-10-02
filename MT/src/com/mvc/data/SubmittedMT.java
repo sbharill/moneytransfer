@@ -1,11 +1,11 @@
-package mypkg;
+package com.mvc.data;
 
-public class MatchedMT {
-	public int getIdMatchedMT() {
-		return idMatchedMT;
+public class SubmittedMT {
+	public int getIdSubmittedMT() {
+		return idSubmittedMT;
 	}
-	public void setIdMatchedMT(int idMatchedMT) {
-		this.idMatchedMT = idMatchedMT;
+	public void setIdSubmittedMT(int idSubmittedMT) {
+		this.idSubmittedMT = idSubmittedMT;
 	}
 	public String getEmailSubmittedBy() {
 		return emailSubmittedBy;
@@ -57,7 +57,7 @@ public class MatchedMT {
 	}	
 	
 	
-	private int idMatchedMT;
+	private int idSubmittedMT;
 	private String emailSubmittedBy;
 	private String idSubmittedBy;
 	private String fromCountry;

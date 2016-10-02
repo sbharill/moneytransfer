@@ -1,8 +1,13 @@
-package mypkg;
+package com.mvc.tasks;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.mvc.dao.QueryExecutor;
+import com.mvc.data.MatchedMT;
+import com.mvc.data.SubmittedMT;
+import com.mvc.data.User;
 
 public class UserTasks {
 	public User verifyPassword(User usr) {
