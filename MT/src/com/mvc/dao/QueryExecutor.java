@@ -10,8 +10,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.mvc.data.Country;
-import com.mvc.data.MatchedMT;
-import com.mvc.data.SubmittedMT;
+import com.mvc.data.MT;
 
 
 public class QueryExecutor {
@@ -58,8 +57,8 @@ public class QueryExecutor {
         }
     }
 
-    public List<SubmittedMT> returnUserSubmittedMTs(String useremail){
-    	List<SubmittedMT> smtc = new ArrayList<SubmittedMT>();
+    public List<MT> returnUserSubmittedMTs(String useremail){
+    	List<MT> smtc = new ArrayList<MT>();
         ResultSet resultSet = null;
         try {
             connection = dataSource.getConnection();
@@ -70,8 +69,8 @@ public class QueryExecutor {
             
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-            	SubmittedMT smt = new SubmittedMT();
-            	smt.setIdSubmittedMT(resultSet.getInt(1));
+            	MT smt = new MT();
+            	smt.setIdMT(resultSet.getInt(1));
             	smt.setIdSubmittedBy(resultSet.getString(2));
             	smt.setIdFromCountry(resultSet.getString(3));
             	smt.setIdToCountry(resultSet.getString(4));
@@ -98,8 +97,8 @@ public class QueryExecutor {
         }
     } 
     
-    public List<MatchedMT> returnUserMatchedMTs(String useremail){
-    	List<MatchedMT> mmtc = new ArrayList<MatchedMT>();
+    public List<MT> returnUserMatchedMTs(String useremail){
+    	List<MT> mmtc = new ArrayList<MT>();
         ResultSet resultSet = null;
         try {
             connection = dataSource.getConnection();
@@ -110,8 +109,8 @@ public class QueryExecutor {
             
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-            	MatchedMT mmt = new MatchedMT();
-            	mmt.setIdMatchedMT(resultSet.getInt(1));
+            	MT mmt = new MT();
+            	mmt.setIdMT(resultSet.getInt(1));
             	mmt.setIdSubmittedBy(resultSet.getString(2));
             	mmt.setIdFromCountry(resultSet.getString(3));
             	mmt.setIdToCountry(resultSet.getString(4));
@@ -137,6 +136,87 @@ public class QueryExecutor {
             	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
         }
     }
+    
+    public List<MT> returnUserInterestShownMTs(String useremail){
+    	List<MT> mmtc = new ArrayList<MT>();
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            //String query = "SELECT idusedleaves, email,type,fromdate,todate,days,approved,idmanager FROM ebookshop.users, ebookshop.usedleaves, ebookshop.leavetype where ebookshop.leavetype.idleavetype=ebookshop.usedleaves.idleavetype and ebookshop.users.idusers=ebookshop.usedleaves.iduser and email='" + useremail + "'";
+            
+            String query = "SELECT s2.idsubmittedmts as idmatchedmts, s2.idsubmittedby, s2.idfromcountry, s2.idtocountry, s2.beforedatemt,c1.name as fromcountry,c2.name as tocountry, u2.email, s2.amount FROM users u1, users u2, submittedmts s1,submittedmts s2, countries c1, countries c2 where s1.idfromcountry=s2.idtocountry and s1.idtocountry=s2.idfromcountry and u1.idusers=s1.idsubmittedby and u2.idusers = s2.idsubmittedby and u1.email = '" + useremail + "'";
+            
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+            	MT mmt = new MT();
+            	mmt.setIdMT(resultSet.getInt(1));
+            	mmt.setIdSubmittedBy(resultSet.getString(2));
+            	mmt.setIdFromCountry(resultSet.getString(3));
+            	mmt.setIdToCountry(resultSet.getString(4));
+            	mmt.setBeforeDateMT(resultSet.getString(5));
+            	mmt.setFromCountry(resultSet.getString(6));
+            	mmt.setToCountry(resultSet.getString(7));
+            	mmt.setEmailSubmittedBy(resultSet.getString(8));
+            	mmt.setAmount(resultSet.getInt(9));            	
+            	mmtc.add(mmt);
+            }
+        	return mmtc;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+        	return mmtc;
+        	}
+        	finally {
+        	try { 
+        		if(null!=resultSet)resultSet.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }    
+    
+    public List<MT> returnUserInterestReceivedMTs(String useremail){
+    	List<MT> mmtc = new ArrayList<MT>();
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            //String query = "SELECT idusedleaves, email,type,fromdate,todate,days,approved,idmanager FROM ebookshop.users, ebookshop.usedleaves, ebookshop.leavetype where ebookshop.leavetype.idleavetype=ebookshop.usedleaves.idleavetype and ebookshop.users.idusers=ebookshop.usedleaves.iduser and email='" + useremail + "'";
+            
+            String query = "SELECT s2.idsubmittedmts as idmatchedmts, s2.idsubmittedby, s2.idfromcountry, s2.idtocountry, s2.beforedatemt,c1.name as fromcountry,c2.name as tocountry, u2.email, s2.amount FROM users u1, users u2, submittedmts s1,submittedmts s2, countries c1, countries c2 where s1.idfromcountry=s2.idtocountry and s1.idtocountry=s2.idfromcountry and u1.idusers=s1.idsubmittedby and u2.idusers = s2.idsubmittedby and u1.email = '" + useremail + "'";
+            
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+            	MT mmt = new MT();
+            	mmt.setIdMT(resultSet.getInt(1));
+            	mmt.setIdSubmittedBy(resultSet.getString(2));
+            	mmt.setIdFromCountry(resultSet.getString(3));
+            	mmt.setIdToCountry(resultSet.getString(4));
+            	mmt.setBeforeDateMT(resultSet.getString(5));
+            	mmt.setFromCountry(resultSet.getString(6));
+            	mmt.setToCountry(resultSet.getString(7));
+            	mmt.setEmailSubmittedBy(resultSet.getString(8));
+            	mmt.setAmount(resultSet.getInt(9));            	
+            	mmtc.add(mmt);
+            }
+        	return mmtc;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+        	return mmtc;
+        	}
+        	finally {
+        	try { 
+        		if(null!=resultSet)resultSet.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    } 
+    
     
     public List<Country> returnCountries() {
     	List<Country> cc = new ArrayList<Country>();

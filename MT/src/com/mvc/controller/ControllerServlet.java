@@ -7,8 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.mvc.data.Country;
-import com.mvc.data.MatchedMT;
-import com.mvc.data.SubmittedMT;
+import com.mvc.data.MT;
 import com.mvc.data.User;
 import com.mvc.tasks.SystemTasks;
 import com.mvc.tasks.UserTasks;
@@ -50,10 +49,14 @@ public class ControllerServlet extends HttpServlet {
 	        	  User usr = new User(useremail, userpassword);
 	        	  UserTasks usertasks = new UserTasks();
 	        	  if (usertasks.verifyPassword(usr)!=null && usertasks.verifyPassword(usr).isAuthenticated()){
-	        		  List<SubmittedMT> submittedMTs = (ArrayList<SubmittedMT>) usertasks.getSubmittedMTs(usr);
-	        		  List<MatchedMT> matchedMTs = (ArrayList<MatchedMT>) usertasks.getMatchedMTs(usr);
+	        		  List<MT> submittedMTs = (ArrayList<MT>) usertasks.getSubmittedMTs(usr);
+	        		  List<MT> matchedMTs = (ArrayList<MT>) usertasks.getMatchedMTs(usr);
+	        		  List<MT> interestShownMTs = (ArrayList<MT>) usertasks.getInterestShownMTs(usr);
+	        		  List<MT> interestReceivedMTs = (ArrayList<MT>) usertasks.getInterestReceivedMTs(usr);
 	        		  session.setAttribute("submittedMTs", submittedMTs);
 	        		  session.setAttribute("matchedMTs", matchedMTs);
+	        		  session.setAttribute("interestShownMTs", interestShownMTs);
+	        		  session.setAttribute("interestReceivedMTs", interestReceivedMTs);
 	        		  session.setAttribute("user", usr);	        		  
 	        		  nextPage = "/showHome.jsp";
 	        	  }

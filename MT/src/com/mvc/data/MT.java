@@ -1,11 +1,11 @@
 package com.mvc.data;
 
-public class SubmittedMT {
-	public int getIdSubmittedMT() {
-		return idSubmittedMT;
+public class MT {
+	public int getIdMT() {
+		return idMT;
 	}
-	public void setIdSubmittedMT(int idSubmittedMT) {
-		this.idSubmittedMT = idSubmittedMT;
+	public void setIdMT(int idMT) {
+		this.idMT = idMT;
 	}
 	public String getEmailSubmittedBy() {
 		return emailSubmittedBy;
@@ -57,7 +57,7 @@ public class SubmittedMT {
 	}	
 	
 	
-	private int idSubmittedMT;
+	private int idMT;
 	private String emailSubmittedBy;
 	private String idSubmittedBy;
 	private String fromCountry;

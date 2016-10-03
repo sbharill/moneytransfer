@@ -19,9 +19,9 @@
             <th>Amount</th>
          </tr>
          <%
-         List<SubmittedMT> smt = (List<SubmittedMT>) session.getAttribute("submittedMTs");
+         List<MT> smt = (List<MT>) session.getAttribute("submittedMTs");
          int cor = 1;
-         for (SubmittedMT item : smt) {
+         for (MT item : smt) {
          %>
          <tr>
             <td><%= cor %></td>
@@ -49,12 +49,12 @@
             <th>Amount</th>
          </tr>
          <%
-         List<MatchedMT> mmt = (List<MatchedMT>) session.getAttribute("matchedMTs");
+         List<MT> mmt = (List<MT>) session.getAttribute("matchedMTs");
          int cor2 = 1;
-         for (MatchedMT item : mmt) {
+         for (MT item : mmt) {
          %>
          <tr>
-            <td><%= cor %></td>
+            <td><%= cor2 %></td>
             <td><%= item.getEmailSubmittedBy()%></td>
             <td><%= item.getFromCountry()%></td>
             <td><%= item.getToCountry()%></td>
@@ -62,7 +62,67 @@
             <td><%= item.getAmount()%></td>                                    
           </tr>
          <%
-         cor = cor +1;
+         cor2 = cor2 +1;
+         } // for
+         //session.invalidate();
+         %>
+      </table>
+
+	  <h1>Interested Shown</h1>
+      <table border="1" cellspacing="0" cellpadding="5">
+         <tr>
+            <th>#</th>         
+            <th>Email</th>
+            <th>From Country</th>
+            <th>To Country</th>
+            <th>Before Date</th>
+            <th>Amount</th>
+         </tr>
+         <%
+         List<MT> ismt = (List<MT>) session.getAttribute("interestShownMTs");
+         int cor3 = 1;
+         for (MT item : ismt) {
+         %>
+         <tr>
+            <td><%= cor3 %></td>
+            <td><%= item.getEmailSubmittedBy()%></td>
+            <td><%= item.getFromCountry()%></td>
+            <td><%= item.getToCountry()%></td>
+            <td><%= item.getBeforeDateMT()%></td>
+            <td><%= item.getAmount()%></td>                                    
+          </tr>
+         <%
+         cor3 = cor3 +1;
+         } // for
+         //session.invalidate();
+         %>
+      </table>
+
+	  <h1>Interested Received</h1>
+      <table border="1" cellspacing="0" cellpadding="5">
+         <tr>
+            <th>#</th>         
+            <th>Email</th>
+            <th>From Country</th>
+            <th>To Country</th>
+            <th>Before Date</th>
+            <th>Amount</th>
+         </tr>
+         <%
+         List<MT> irmt = (List<MT>) session.getAttribute("interestReceivedMTs");
+         int cor4 = 1;
+         for (MT item : irmt) {
+         %>
+         <tr>
+            <td><%= cor3 %></td>
+            <td><%= item.getEmailSubmittedBy()%></td>
+            <td><%= item.getFromCountry()%></td>
+            <td><%= item.getToCountry()%></td>
+            <td><%= item.getBeforeDateMT()%></td>
+            <td><%= item.getAmount()%></td>                                    
+          </tr>
+         <%
+         cor4 = cor4 +1;
          } // for
          //session.invalidate();
          %>

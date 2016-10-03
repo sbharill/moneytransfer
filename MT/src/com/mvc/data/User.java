@@ -42,16 +42,4 @@ public String getUserid() {
 	return userid;
 }
 
-public List<SubmittedMT> getSubmittedMTs(){
-	QueryExecutor qe = new QueryExecutor();
-	List<SubmittedMT> submittedMTs = qe.returnUserSubmittedMTs(this.username);
-	return submittedMTs;
-}
-
-public List<MatchedMT> getMatchedMTs(){
-	QueryExecutor qe = new QueryExecutor();
-	List<MatchedMT> matchedMTs = qe.returnUserMatchedMTs(this.username);
-	return matchedMTs;
-}
-
 }

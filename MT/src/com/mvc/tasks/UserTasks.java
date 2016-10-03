@@ -5,8 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mvc.dao.QueryExecutor;
-import com.mvc.data.MatchedMT;
-import com.mvc.data.SubmittedMT;
+import com.mvc.data.MT;
 import com.mvc.data.User;
 
 public class UserTasks {
@@ -28,18 +27,30 @@ public class UserTasks {
 		else return null;
 		}
 
-	public List<SubmittedMT> getSubmittedMTs(User usr){
+	public List<MT> getSubmittedMTs(User usr){
 		QueryExecutor qe = new QueryExecutor();
-		List<SubmittedMT> submittedMTs = qe.returnUserSubmittedMTs(usr.getUsername());
+		List<MT> submittedMTs = qe.returnUserSubmittedMTs(usr.getUsername());
 		return submittedMTs;
 	}
 
-	public List<MatchedMT> getMatchedMTs(User usr){
+	public List<MT> getMatchedMTs(User usr){
 		QueryExecutor qe = new QueryExecutor();
-		List<MatchedMT> matchedMTs = qe.returnUserMatchedMTs(usr.getUsername());
+		List<MT> matchedMTs = qe.returnUserMatchedMTs(usr.getUsername());
 		return matchedMTs;
 	}
+
+	public List<MT> getInterestShownMTs(User usr){
+		QueryExecutor qe = new QueryExecutor();
+		List<MT> interestShownMTs = qe.returnUserInterestShownMTs(usr.getUsername());
+		return interestShownMTs;
+	}
 	
+	public List<MT> getInterestReceivedMTs(User usr){
+		QueryExecutor qe = new QueryExecutor();
+		List<MT> interestReceivedMTs = qe.returnUserInterestReceivedMTs(usr.getUsername());
+		return interestReceivedMTs;
+	}	
+
 	public boolean signUp(HttpServletRequest request) {
 		String signUpData[] = new String[5];
 		signUpData[0] = request.getParameter("firstname");
