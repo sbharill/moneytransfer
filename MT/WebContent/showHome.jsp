@@ -47,24 +47,73 @@
             <th>To Country</th>
             <th>Before Date</th>
             <th>Amount</th>
+            <th>Interested?</th> 
          </tr>
          <%
          List<MT> mmt = (List<MT>) session.getAttribute("matchedMTs");
+         List<Interest> i = (List<Interest>) session.getAttribute("interests");        		 
+         User user = (User) session.getAttribute("user");
          int cor2 = 1;
          for (MT item : mmt) {
+        	 if(i.size() > 0) {
+        	 for (Interest item2 : i) {
+        		 if(item.getIdMT() == item2.getIdMT())
+        		 {
          %>
-         <tr>
-            <td><%= cor2 %></td>
-            <td><%= item.getEmailSubmittedBy()%></td>
-            <td><%= item.getFromCountry()%></td>
-            <td><%= item.getToCountry()%></td>
-            <td><%= item.getBeforeDateMT()%></td>
-            <td><%= item.getAmount()%></td>                                    
-          </tr>
+			         <tr>
+			            <td><%= cor2 %></td>
+			            <td><%= item.getEmailSubmittedBy()%></td>
+			            <td><%= item.getFromCountry()%></td>
+			            <td><%= item.getToCountry()%></td>
+			            <td><%= item.getBeforeDateMT()%></td>
+			            <td><%= item.getAmount()%></td> 
+			            <td>Interest Shown</td>                                    
+			          </tr>
          <%
+        		 }
+        		 else{
+        	         %>
+			         <tr>
+			            <td><%= cor2 %></td>
+			            <td><%= item.getEmailSubmittedBy()%></td>
+			            <td><%= item.getFromCountry()%></td>
+			            <td><%= item.getToCountry()%></td>
+			            <td><%= item.getBeforeDateMT()%></td>
+			            <td><%= item.getAmount()%></td> 
+			            <td><form name="showInterest" action="process" method="POST">
+			         		<input type="hidden" name="todo" value="showInterest">
+			         		<input type="hidden" name="idMT" value="<%= item.getIdMT()%>">
+			         		<input type="hidden" name="idUser" value="<%= user.getUserid()%>">         		
+			         		<input type="submit" value="Show Interest">
+			      			</form>
+			      		</td>                                    
+			          </tr>
+         <%        			 
+        		 }
+        	 }
          cor2 = cor2 +1;
-         } // for
-         //session.invalidate();
+         }
+        	 else{
+    	         %>
+		         <tr>
+		            <td><%= cor2 %></td>
+		            <td><%= item.getEmailSubmittedBy()%></td>
+		            <td><%= item.getFromCountry()%></td>
+		            <td><%= item.getToCountry()%></td>
+		            <td><%= item.getBeforeDateMT()%></td>
+		            <td><%= item.getAmount()%></td> 
+		            <td><form name="showInterest" action="process" method="POST">
+		         		<input type="hidden" name="todo" value="showInterest">
+		         		<input type="hidden" name="idMT" value="<%= item.getIdMT()%>">
+		         		<input type="hidden" name="idUser" value="<%= user.getUserid()%>">         		
+		         		<input type="submit" value="Show Interest">
+		      			</form>
+		      		</td>                                    
+		          </tr>
+     <%           		 
+        	 }
+        		 
+         } 
          %>
       </table>
 

@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import com.mvc.data.Country;
 import com.mvc.data.MT;
 import com.mvc.data.User;
+import com.mvc.data.Interest;
 import com.mvc.tasks.SystemTasks;
 import com.mvc.tasks.UserTasks;
  
@@ -53,10 +54,12 @@ public class ControllerServlet extends HttpServlet {
 	        		  List<MT> matchedMTs = (ArrayList<MT>) usertasks.getMatchedMTs(usr);
 	        		  List<MT> interestShownMTs = (ArrayList<MT>) usertasks.getInterestShownMTs(usr);
 	        		  List<MT> interestReceivedMTs = (ArrayList<MT>) usertasks.getInterestReceivedMTs(usr);
+	        		  List<Interest> interests = (ArrayList<Interest>) usertasks.getInterests(usr);	        		  
 	        		  session.setAttribute("submittedMTs", submittedMTs);
 	        		  session.setAttribute("matchedMTs", matchedMTs);
 	        		  session.setAttribute("interestShownMTs", interestShownMTs);
 	        		  session.setAttribute("interestReceivedMTs", interestReceivedMTs);
+	        		  session.setAttribute("interests", interests);	        		  
 	        		  session.setAttribute("user", usr);	        		  
 	        		  nextPage = "/showHome.jsp";
 	        	  }
@@ -100,7 +103,14 @@ public class ControllerServlet extends HttpServlet {
     		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
     		  request.setAttribute("Countries", countries);
      		  nextPage = "/createMT.jsp";
-    	  }    	  
+    	  }
+    	  else if (todo.equals("showInterest")){
+    		  UserTasks usertasks = new UserTasks();
+    		  boolean success =  usertasks.showInterestMT(request);
+    		  if(success) request.setAttribute("message", "Show Interest MT success.");
+    		  else request.setAttribute("message", "Show Interest MT failure, please try again.");
+     		  nextPage = "/showHome.jsp";
+    	  }       	  
  	  }
       ServletContext servletContext = getServletContext();
       RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(nextPage);

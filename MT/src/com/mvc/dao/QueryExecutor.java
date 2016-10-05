@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import com.mvc.data.Country;
 import com.mvc.data.MT;
+import com.mvc.data.Interest;
 
 
 public class QueryExecutor {
@@ -97,18 +98,18 @@ public class QueryExecutor {
         }
     } 
     
-    public List<MT> returnUserMatchedMTs(String useremail){
+    public List<MT> returnUserMatchedMTs(String usereid){
     	List<MT> mmtc = new ArrayList<MT>();
         ResultSet resultSet = null;
         try {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
-            //String query = "SELECT idusedleaves, email,type,fromdate,todate,days,approved,idmanager FROM ebookshop.users, ebookshop.usedleaves, ebookshop.leavetype where ebookshop.leavetype.idleavetype=ebookshop.usedleaves.idleavetype and ebookshop.users.idusers=ebookshop.usedleaves.iduser and email='" + useremail + "'";
-            
-            String query = "SELECT s2.idsubmittedmts as idmatchedmts, s2.idsubmittedby, s2.idfromcountry, s2.idtocountry, s2.beforedatemt,c1.name as fromcountry,c2.name as tocountry, u2.email, s2.amount FROM users u1, users u2, submittedmts s1,submittedmts s2, countries c1, countries c2 where s1.idfromcountry=s2.idtocountry and s1.idtocountry=s2.idfromcountry and u1.idusers=s1.idsubmittedby and u2.idusers = s2.idsubmittedby and u1.email = '" + useremail + "'";
-            
+            String query = "SELECT s1.idsubmittedmts, s1.idSubmittedBy, s1.idFromCountry, s1.idToCountry, s1.beforeDateMT, c1.name, c2.name, u1.email, s1.amount from submittedmts s1,submittedmts s2, users u1, countries c1, countries c2 where s1.idSubmittedBy != "+usereid+" and s1.idFromCountry = s2.idToCountry and s1.idToCountry = s2.idFromCountry and u1.idusers = s1.idsubmittedby and s1.idfromcountry = c1.idcountry and s1.idtocountry = c2.idcountry";
+            //System.out.println(query);
             resultSet = statement.executeQuery(query);
+            int num = 1;
             while (resultSet.next()) {
+            	System.out.println(num);
             	MT mmt = new MT();
             	mmt.setIdMT(resultSet.getInt(1));
             	mmt.setIdSubmittedBy(resultSet.getString(2));
@@ -120,6 +121,7 @@ public class QueryExecutor {
             	mmt.setEmailSubmittedBy(resultSet.getString(8));
             	mmt.setAmount(resultSet.getInt(9));            	
             	mmtc.add(mmt);
+            	num = num +1;
             }
         	return mmtc;
         	} 
@@ -289,5 +291,58 @@ public class QueryExecutor {
             try { 
             	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
         }
-    }     
+    } 
+
+    public boolean submitShowInterestData(String idMT, String idUser){
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            String query = "INSERT INTO interests (iduser, idsubmittedmt) VALUES ('"+idUser+"','"+idMT+"')";
+            int rows = statement.executeUpdate(query);
+            return true;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        	}
+        	finally {
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }
+    
+    public List<Interest> returnUserInterests(String idUser) {
+    	List<Interest> ic = new ArrayList<Interest>();
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            
+            String query = "Select * from interests where iduser='"+ idUser +"'";
+            
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+            	Interest i = new Interest();
+            	i.setIdInterest(resultSet.getInt(1));
+            	i.setIdUser(resultSet.getInt(2));
+            	i.setIdMT(resultSet.getInt(3));            	
+            	ic.add(i);
+            }
+        	return ic;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+        	return ic;
+        	}
+        	finally {
+        	try { 
+        		if(null!=resultSet)resultSet.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }      
 }

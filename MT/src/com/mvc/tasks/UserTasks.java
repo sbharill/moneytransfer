@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.mvc.dao.QueryExecutor;
 import com.mvc.data.MT;
 import com.mvc.data.User;
+import com.mvc.data.Interest;
 
 public class UserTasks {
 	public User verifyPassword(User usr) {
@@ -35,7 +36,7 @@ public class UserTasks {
 
 	public List<MT> getMatchedMTs(User usr){
 		QueryExecutor qe = new QueryExecutor();
-		List<MT> matchedMTs = qe.returnUserMatchedMTs(usr.getUsername());
+		List<MT> matchedMTs = qe.returnUserMatchedMTs(usr.getUserid());
 		return matchedMTs;
 	}
 
@@ -80,4 +81,19 @@ public class UserTasks {
 		return success;
 	
 	}
+	
+	public boolean showInterestMT(HttpServletRequest request) {
+		String idMT= request.getParameter("idMT");
+		String idUser= request.getParameter("idUser");		
+		QueryExecutor qe = new QueryExecutor();
+		boolean success = qe.submitShowInterestData(idMT, idUser);
+		return success;
+	
+	}	
+	
+	public List<Interest> getInterests(User usr){
+		QueryExecutor qe = new QueryExecutor();
+		List<Interest> interests = qe.returnUserInterests(usr.getUserid());
+		return interests;
+	}		
 }
