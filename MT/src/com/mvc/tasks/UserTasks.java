@@ -88,7 +88,14 @@ public class UserTasks {
 		QueryExecutor qe = new QueryExecutor();
 		boolean success = qe.submitShowInterestData(idMT, idUser);
 		return success;
+	}
 	
+	public boolean removeInterestMT(HttpServletRequest request) {
+		String idMT= request.getParameter("idMT");
+		String idUser= request.getParameter("idUser");		
+		QueryExecutor qe = new QueryExecutor();
+		boolean success = qe.submitRemoveInterestData(idMT, idUser);
+		return success;
 	}	
 	
 	public List<Interest> getInterests(User usr){

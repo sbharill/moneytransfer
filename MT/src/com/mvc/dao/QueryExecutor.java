@@ -313,6 +313,26 @@ public class QueryExecutor {
         }
     }
     
+    public boolean submitRemoveInterestData(String idMT, String idUser){
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            String query = "UPDATE interests SET removed = 1 where iduser="+idUser+" and idsubmittedmt="+idMT;
+            int rows = statement.executeUpdate(query);
+            return true;
+        	} 
+        	catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        	}
+        	finally {
+            try { 
+            	if(null!=statement)statement.close();} catch (SQLException e){e.printStackTrace();}
+            try { 
+            	if(null!=connection)connection.close();} catch (SQLException e) {e.printStackTrace();}
+        }
+    }    
+    
     public List<Interest> returnUserInterests(String idUser) {
     	List<Interest> ic = new ArrayList<Interest>();
         ResultSet resultSet = null;
@@ -320,7 +340,7 @@ public class QueryExecutor {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             
-            String query = "Select * from interests where iduser='"+ idUser +"'";
+            String query = "Select * from interests where iduser='"+ idUser +"' and removed=0";
             
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {

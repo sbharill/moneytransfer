@@ -67,7 +67,14 @@
 			            <td><%= item.getToCountry()%></td>
 			            <td><%= item.getBeforeDateMT()%></td>
 			            <td><%= item.getAmount()%></td> 
-			            <td>Interest Shown</td>                                    
+			            <td>Interest Shown
+							<form name="removeInterest" action="process" method="POST">
+			         		<input type="hidden" name="todo" value="removeInterest">
+			         		<input type="hidden" name="idMT" value="<%= item.getIdMT()%>">
+			         		<input type="hidden" name="idUser" value="<%= user.getUserid()%>">         		
+			         		<input type="submit" value="Remove Interest">
+			      			</form>			            
+			            </td>                                    
 			          </tr>
          <%
         		 }

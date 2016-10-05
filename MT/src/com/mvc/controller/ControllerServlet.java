@@ -110,7 +110,14 @@ public class ControllerServlet extends HttpServlet {
     		  if(success) request.setAttribute("message", "Show Interest MT success.");
     		  else request.setAttribute("message", "Show Interest MT failure, please try again.");
      		  nextPage = "/showHome.jsp";
-    	  }       	  
+    	  }
+    	  else if (todo.equals("removeInterest")){
+    		  UserTasks usertasks = new UserTasks();
+    		  boolean success =  usertasks.removeInterestMT(request);
+    		  if(success) request.setAttribute("message", "Remove Interest MT success.");
+    		  else request.setAttribute("message", "Remove Interest MT failure, please try again.");
+     		  nextPage = "/showHome.jsp";
+    	  }     	  
  	  }
       ServletContext servletContext = getServletContext();
       RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(nextPage);
