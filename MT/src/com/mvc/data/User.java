@@ -6,27 +6,53 @@ import com.mvc.dao.QueryExecutor;
 
 public class User {
 private String userid;	
-private String username;
+private String firstname;
+private String lastname;
+private String useremail;
+private int idcountry;
 private String userpassword;
 private boolean authenticated;
 
-public User(String username, String userpassword)
+public User()
 {
-	this.username = username;
+	this.useremail = "";
+	this.userpassword = "";
+	this.authenticated = false;
+	this.firstname = "";
+	this.lastname = "";
+	this.idcountry = 0;
+	this.userid = "";
+}
+
+public User(String useremail, String userpassword)
+{
+	this.useremail = useremail;
 	this.userpassword = userpassword;
 	this.authenticated = false;
 }
 public void setUserpassword(String userpassword) {
 	this.userpassword = userpassword;
 }
+public String getFirstname() {
+	return firstname;
+}
+public void setFirstname(String firstname) {
+	this.firstname = firstname;
+}
+public String getLastname() {
+	return lastname;
+}
+public void setLastname(String lastname) {
+	this.lastname = lastname;
+}
+public String getUseremail() {
+	return useremail;
+}
+public void setUseremail(String useremail) {
+	this.useremail = useremail;
+}
 public String getUserpassword() {
 	return userpassword;
-}
-public void setUsername(String username) {
-	this.username = username;
-}
-public String getUsername() {
-	return username;
 }
 public void setAuthenticated(boolean authenticated) {
 	this.authenticated = authenticated;
@@ -40,6 +66,12 @@ public void setUserid(String userid) {
 }
 public String getUserid() {
 	return userid;
+}
+public int getIdcountry() {
+	return idcountry;
+}
+public void setIdcountry(int idcountry) {
+	this.idcountry = idcountry;
 }
 
 }

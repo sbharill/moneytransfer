@@ -52,13 +52,9 @@ public class ControllerServlet extends HttpServlet {
 	        	  if (usertasks.verifyPassword(usr)!=null && usertasks.verifyPassword(usr).isAuthenticated()){
 	        		  List<MT> submittedMTs = (ArrayList<MT>) usertasks.getSubmittedMTs(usr);
 	        		  List<MT> matchedMTs = (ArrayList<MT>) usertasks.getMatchedMTs(usr);
-	        		  List<MT> interestShownMTs = (ArrayList<MT>) usertasks.getInterestShownMTs(usr);
-	        		  List<MT> interestReceivedMTs = (ArrayList<MT>) usertasks.getInterestReceivedMTs(usr);
 	        		  List<Interest> interests = (ArrayList<Interest>) usertasks.getInterests(usr);	        		  
 	        		  session.setAttribute("submittedMTs", submittedMTs);
 	        		  session.setAttribute("matchedMTs", matchedMTs);
-	        		  session.setAttribute("interestShownMTs", interestShownMTs);
-	        		  session.setAttribute("interestReceivedMTs", interestReceivedMTs);
 	        		  session.setAttribute("interests", interests);	        		  
 	        		  session.setAttribute("user", usr);	        		  
 	        		  nextPage = "/showHome.jsp";
@@ -82,6 +78,9 @@ public class ControllerServlet extends HttpServlet {
     		  else request.setAttribute("message", "SignUp failure, please try again.");
      		  nextPage = "/login.jsp";
     	  }
+    	  else if (todo.equals("cancelsignup")){
+     		  nextPage = "/login.jsp";
+    	  }    	  
       }
       else{
     	  String todo = request.getParameter("todo");
@@ -109,6 +108,9 @@ public class ControllerServlet extends HttpServlet {
     		  boolean success =  usertasks.showInterestMT(request);
     		  if(success) request.setAttribute("message", "Show Interest MT success.");
     		  else request.setAttribute("message", "Show Interest MT failure, please try again.");
+    		  User usr = (User) session.getAttribute("user");
+    		  List<Interest> interests = (ArrayList<Interest>) usertasks.getInterests(usr);	        		  
+    		  session.setAttribute("interests", interests);	    		  
      		  nextPage = "/showHome.jsp";
     	  }
     	  else if (todo.equals("removeInterest")){
@@ -116,8 +118,41 @@ public class ControllerServlet extends HttpServlet {
     		  boolean success =  usertasks.removeInterestMT(request);
     		  if(success) request.setAttribute("message", "Remove Interest MT success.");
     		  else request.setAttribute("message", "Remove Interest MT failure, please try again.");
+    		  User usr = (User) session.getAttribute("user");
+    		  List<Interest> interests = (ArrayList<Interest>) usertasks.getInterests(usr);	        		  
+    		  session.setAttribute("interests", interests);	      		  
      		  nextPage = "/showHome.jsp";
-    	  }     	  
+    	  } 
+    	  else if (todo.equals("goToMyProfile")){
+    		  SystemTasks commontasks = new SystemTasks();
+    		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
+    		  request.setAttribute("Countries", countries);    		  
+     		  nextPage = "/myProfile.jsp";
+    	  } 
+    	  else if (todo.equals("saveprofile")){
+    		  SystemTasks systemtasks = new SystemTasks();
+    		  List<Country> countries= (ArrayList<Country>) systemtasks.getCountries();
+    		  request.setAttribute("Countries", countries);     		  
+    		  UserTasks usertasks = new UserTasks();
+    		  User user =  usertasks.saveProfile(request);
+    		  //if(success) request.setAttribute("message", "SaveProfile success.");
+    		  //else request.setAttribute("message", "SaveProfile failure, please try again.");
+    		  session.setAttribute("user", user);	
+    		  nextPage = "/myProfile.jsp";
+    	  }
+    	  else if (todo.equals("gotohome")){
+    		  nextPage = "/showHome.jsp";
+    	  }
+    	  else if (todo.equals("goToUserProfile")){
+    		  SystemTasks systemtasks = new SystemTasks();
+    		  User otherUser = systemtasks.getUserProfile(request);
+    		  session.setAttribute("otheruser", otherUser);	
+     		  nextPage = "/userProfile.jsp";
+    	  }
+    	  else if (todo.equals("logout")){
+    		  session.invalidate();
+    		  nextPage = "/login.jsp";
+    	  }       	  
  	  }
       ServletContext servletContext = getServletContext();
       RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(nextPage);

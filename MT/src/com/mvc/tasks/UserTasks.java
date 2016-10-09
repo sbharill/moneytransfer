@@ -12,25 +12,31 @@ import com.mvc.data.Interest;
 public class UserTasks {
 	public User verifyPassword(User usr) {
 		QueryExecutor qe = new QueryExecutor();
-		String userData[] = qe.returnUserData(usr.getUsername());
+		String userData[] = qe.returnUserData(usr.getUseremail());
 		if(userData!=null){
-		String qePassword = userData[1];
-		String qeId = userData[0];
-		if (!qePassword.equals("") && usr.getUserpassword().equals(qePassword)){
-			usr.setUserid(qeId);
-			usr.setAuthenticated(true);
-			return usr;
-		}
-		else{
-			return null;
-		}
+			String qeId = userData[0];
+			String qePassword = userData[1];
+			String qeFirstName = userData[2];
+			String qeLastName = userData[3];
+			int qeidCountry = Integer.parseInt(userData[4]);
+			if (!qePassword.equals("") && usr.getUserpassword().equals(qePassword)){
+				usr.setUserid(qeId);
+				usr.setAuthenticated(true);
+				usr.setFirstname(qeFirstName);
+				usr.setLastname(qeLastName);
+				usr.setIdcountry(qeidCountry);
+				return usr;
+			}
+			else{
+				return null;
+			}
 		}
 		else return null;
 		}
 
 	public List<MT> getSubmittedMTs(User usr){
 		QueryExecutor qe = new QueryExecutor();
-		List<MT> submittedMTs = qe.returnUserSubmittedMTs(usr.getUsername());
+		List<MT> submittedMTs = qe.returnUserSubmittedMTs(usr.getUserid());
 		return submittedMTs;
 	}
 
@@ -39,7 +45,7 @@ public class UserTasks {
 		List<MT> matchedMTs = qe.returnUserMatchedMTs(usr.getUserid());
 		return matchedMTs;
 	}
-
+/*
 	public List<MT> getInterestShownMTs(User usr){
 		QueryExecutor qe = new QueryExecutor();
 		List<MT> interestShownMTs = qe.returnUserInterestShownMTs(usr.getUsername());
@@ -51,7 +57,7 @@ public class UserTasks {
 		List<MT> interestReceivedMTs = qe.returnUserInterestReceivedMTs(usr.getUsername());
 		return interestReceivedMTs;
 	}	
-
+*/
 	public boolean signUp(HttpServletRequest request) {
 		String signUpData[] = new String[5];
 		signUpData[0] = request.getParameter("firstname");
@@ -59,6 +65,7 @@ public class UserTasks {
 		signUpData[2] = request.getParameter("email");
 		signUpData[3] = request.getParameter("password");
 		signUpData[4] = request.getParameter("retypepassword");
+		signUpData[5] = request.getParameter("country");
 		
 		if (!signUpData[3].equals(signUpData[4])) return false;
 		
@@ -102,5 +109,26 @@ public class UserTasks {
 		QueryExecutor qe = new QueryExecutor();
 		List<Interest> interests = qe.returnUserInterests(usr.getUserid());
 		return interests;
-	}		
+	}
+	
+	public User saveProfile(HttpServletRequest request) {
+		String signUpData[] = new String[5];
+		signUpData[0] = request.getParameter("iduser");		
+		signUpData[1] = request.getParameter("firstname");
+		signUpData[2] = request.getParameter("lastname");
+		signUpData[3] = request.getParameter("email");
+		signUpData[4] = request.getParameter("idcountry");
+		
+		QueryExecutor qe = new QueryExecutor();
+		String userData[] = qe.submitSaveProfile(signUpData);
+		User usr = new User();
+		usr.setUserid(userData[0]);
+		usr.setUseremail(userData[1]);
+		usr.setAuthenticated(true);
+		usr.setFirstname(userData[2]);
+		usr.setLastname(userData[3]);
+		usr.setIdcountry(Integer.parseInt(userData[4]));
+		return usr;
+	
+	}	
 }

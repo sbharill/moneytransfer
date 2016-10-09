@@ -59,6 +59,10 @@
          <input type="hidden" name="todo" value="createMT">
          <input type="submit" value="Submit">
       </form>
+      <form name="gotohome" action="process" method="POST">      
+         <input type="hidden" name="todo" value="gotohome">
+         <input type="submit" value="Home">
+      </form>     
         <%
         String message = (String)request.getAttribute("message");
         if(message == null){

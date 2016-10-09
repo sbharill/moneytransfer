@@ -53,5 +53,9 @@
          <input type="hidden" name="todo" value="signup">
          <input type="submit" value="Submit">
       </form>
+      <form name="cancelsignup" action="process" method="POST">      
+         <input type="hidden" name="todo" value="cancelsignup">
+         <input type="submit" value="Cancel">
+      </form>         
 </body>
 </html>

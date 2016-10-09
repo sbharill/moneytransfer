@@ -55,7 +55,18 @@ public class MT {
 	public void setIdToCountry(String idToCountry) {
 		this.idToCountry = idToCountry;
 	}	
-	
+	public String getInterested() {
+		return interested;
+	}
+	public void setInterested(String interested) {
+		this.interested = interested;
+	}	
+	public String getIdInterested() {
+		return idInterested;
+	}
+	public void setIdInterested(String idInterested) {
+		this.idInterested = idInterested;
+	}		
 	
 	private int idMT;
 	private String emailSubmittedBy;
@@ -66,4 +77,8 @@ public class MT {
 	private String idToCountry;	
 	private String beforeDateMT;	
 	private int amount;
+	private String interested;
+	private String idInterested;
+
+
 }

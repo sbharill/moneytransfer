@@ -17,24 +17,73 @@
             <th>To Country</th>
             <th>Before Date</th>
             <th>Amount</th>
+            <th>Interested</th>
          </tr>
          <%
          List<MT> smt = (List<MT>) session.getAttribute("submittedMTs");
          int cor = 1;
+         int sno = 1;
+         String emailSubmittedBy = "";
+         String fromCountry = "";
+         String toCountry = "";
+         String beforeDateMT = "";
+         int amount = 0;  
+         String interested = "";
+         String idInterested = "";         
+         String interestedAll = "";
+         
          for (MT item : smt) {
-         %>
-         <tr>
-            <td><%= cor %></td>
-            <td><%= item.getEmailSubmittedBy()%></td>
-            <td><%= item.getFromCountry()%></td>
-            <td><%= item.getToCountry()%></td>
-            <td><%= item.getBeforeDateMT()%></td>
-            <td><%= item.getAmount()%></td>                                    
-          </tr>
-         <%
+        	 if(cor == 1){
+                 emailSubmittedBy = item.getEmailSubmittedBy();
+                 fromCountry = item.getFromCountry();
+                 toCountry = item.getToCountry();
+                 beforeDateMT = item.getBeforeDateMT();
+                 amount = item.getAmount();  
+                 interested = item.getInterested();
+                 idInterested = item.getIdInterested();                 
+                 interestedAll = "<form name=\"goToUserProfile\" action=\"process\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+idInterested+"\"><input type=\"submit\" value=\""+interested+"\"></form>";  
+        	 }
+        	 else{
+	        	 if(emailSubmittedBy.equals(item.getEmailSubmittedBy()) && fromCountry.equals(item.getFromCountry()) && toCountry.equals(item.getToCountry()) && beforeDateMT.equals(item.getBeforeDateMT()) && amount == item.getAmount()){
+	        		 interestedAll = interestedAll + "," + "<form name=\"goToUserProfile\" action=\"process\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+item.getIdInterested()+"\"><input type=\"submit\" value=\""+item.getInterested()+"\"></form>";
+	        	 }
+	        	 else{
+			         %>
+			         <tr>
+			            <td><%= sno %></td>
+			            <td><%= emailSubmittedBy%></td>
+			            <td><%= fromCountry%></td>
+			            <td><%= toCountry%></td>
+			            <td><%= beforeDateMT%></td>
+			            <td><%= amount%></td> 
+			            <td><%= interestedAll%></td>                                    
+			          </tr>
+			         <%
+	                 emailSubmittedBy = item.getEmailSubmittedBy();
+	                 fromCountry = item.getFromCountry();
+	                 toCountry = item.getToCountry();
+	                 beforeDateMT = item.getBeforeDateMT();
+	                 amount = item.getAmount();  
+	                 interested = item.getInterested();
+	                 interestedAll = interested;
+	                 sno = sno + 1;
+	        	 }
+        	 }
+        	 if(cor == smt.size()){
+		         %>
+		         <tr>
+		            <td><%= sno %></td>
+		            <td><%= emailSubmittedBy%></td>
+		            <td><%= fromCountry%></td>
+		            <td><%= toCountry%></td>
+		            <td><%= beforeDateMT%></td>
+		            <td><%= amount%></td> 
+		            <td><%= interestedAll%></td>                                    
+		          </tr>
+		         <%        		 
+        	 }
          cor = cor +1;
-         } // for
-         //session.invalidate();
+         }
          %>
       </table>
 
@@ -123,72 +172,19 @@
          } 
          %>
       </table>
-
-	  <h1>Interested Shown</h1>
-      <table border="1" cellspacing="0" cellpadding="5">
-         <tr>
-            <th>#</th>         
-            <th>Email</th>
-            <th>From Country</th>
-            <th>To Country</th>
-            <th>Before Date</th>
-            <th>Amount</th>
-         </tr>
-         <%
-         List<MT> ismt = (List<MT>) session.getAttribute("interestShownMTs");
-         int cor3 = 1;
-         for (MT item : ismt) {
-         %>
-         <tr>
-            <td><%= cor3 %></td>
-            <td><%= item.getEmailSubmittedBy()%></td>
-            <td><%= item.getFromCountry()%></td>
-            <td><%= item.getToCountry()%></td>
-            <td><%= item.getBeforeDateMT()%></td>
-            <td><%= item.getAmount()%></td>                                    
-          </tr>
-         <%
-         cor3 = cor3 +1;
-         } // for
-         //session.invalidate();
-         %>
-      </table>
-
-	  <h1>Interested Received</h1>
-      <table border="1" cellspacing="0" cellpadding="5">
-         <tr>
-            <th>#</th>         
-            <th>Email</th>
-            <th>From Country</th>
-            <th>To Country</th>
-            <th>Before Date</th>
-            <th>Amount</th>
-         </tr>
-         <%
-         List<MT> irmt = (List<MT>) session.getAttribute("interestReceivedMTs");
-         int cor4 = 1;
-         for (MT item : irmt) {
-         %>
-         <tr>
-            <td><%= cor3 %></td>
-            <td><%= item.getEmailSubmittedBy()%></td>
-            <td><%= item.getFromCountry()%></td>
-            <td><%= item.getToCountry()%></td>
-            <td><%= item.getBeforeDateMT()%></td>
-            <td><%= item.getAmount()%></td>                                    
-          </tr>
-         <%
-         cor4 = cor4 +1;
-         } // for
-         //session.invalidate();
-         %>
-      </table>
-
 	  <br>
 
       <form name="createMT" action="process" method="POST">
          <input type="hidden" name="todo" value="goToCreateMT">
          <input type="submit" value="Create MT">
       </form>
+      <form name="goToMyProfile" action="process" method="POST">
+         <input type="hidden" name="todo" value="goToMyProfile">
+         <input type="submit" value="Profile">
+      </form>
+      <form name="logout" action="process" method="POST">
+         <input type="hidden" name="todo" value="logout">
+         <input type="submit" value="Logout">
+      </form>               
 </body>
 </html>
