@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-      <form name="submitMT" action="process" method="POST">
+      <form name="submitMT" action="createmt" method="POST">
       <table border="1" cellspacing="0" cellpadding="5">
          <tr>
          	<th colspan=2>I want to transfer</th>
@@ -59,7 +59,7 @@
          <input type="hidden" name="todo" value="createMT">
          <input type="submit" value="Submit">
       </form>
-      <form name="gotohome" action="process" method="POST">      
+      <form name="gotohome" action="home" method="POST">      
          <input type="hidden" name="todo" value="gotohome">
          <input type="submit" value="Home">
       </form>     

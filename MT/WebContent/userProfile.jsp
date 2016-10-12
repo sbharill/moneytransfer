@@ -31,7 +31,7 @@
          	<td><%= user.getIdcountry()%></td>
         </tr>
       </table>
-      <form name="gotohome" action="process" method="POST">      
+      <form name="gotohome" action="../home" method="POST">      
          <input type="hidden" name="todo" value="gotohome">
          <input type="submit" value="Home">
       </form>       

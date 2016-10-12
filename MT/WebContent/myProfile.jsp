@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-      <form name="profile" action="process" method="POST">
+      <form name="profile" action="myprofile" method="POST">
       <table border="1" cellspacing="0" cellpadding="5">
          <tr>
          	<th colspan=2>Profile</th>
@@ -55,7 +55,7 @@
          <input type="hidden" name="todo" value="saveprofile">
          <input type="submit" value="Submit">
       </form>
-      <form name="gotohome" action="process" method="POST">      
+      <form name="gotohome" action="home" method="POST">      
          <input type="hidden" name="todo" value="gotohome">
          <input type="submit" value="Home">
       </form>      

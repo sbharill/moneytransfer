@@ -41,11 +41,11 @@
                  amount = item.getAmount();  
                  interested = item.getInterested();
                  idInterested = item.getIdInterested();                 
-                 interestedAll = "<form name=\"goToUserProfile\" action=\"process\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+idInterested+"\"><input type=\"submit\" value=\""+interested+"\"></form>";  
+                 interestedAll = "<form name=\"goToUserProfile\" action=\"profile/"+item.getInterested()+"\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+idInterested+"\"><input type=\"submit\" value=\""+interested+"\"></form>";  
         	 }
         	 else{
 	        	 if(emailSubmittedBy.equals(item.getEmailSubmittedBy()) && fromCountry.equals(item.getFromCountry()) && toCountry.equals(item.getToCountry()) && beforeDateMT.equals(item.getBeforeDateMT()) && amount == item.getAmount()){
-	        		 interestedAll = interestedAll + "," + "<form name=\"goToUserProfile\" action=\"process\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+item.getIdInterested()+"\"><input type=\"submit\" value=\""+item.getInterested()+"\"></form>";
+	        		 interestedAll = interestedAll + "," + "<form name=\"goToUserProfile\" action=\"profile/"+item.getInterested()+"\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+item.getIdInterested()+"\"><input type=\"submit\" value=\""+item.getInterested()+"\"></form>";
 	        	 }
 	        	 else{
 			         %>
@@ -174,15 +174,15 @@
       </table>
 	  <br>
 
-      <form name="createMT" action="process" method="POST">
+      <form name="createMT" action="createmt" method="POST">
          <input type="hidden" name="todo" value="goToCreateMT">
          <input type="submit" value="Create MT">
       </form>
-      <form name="goToMyProfile" action="process" method="POST">
+      <form name="goToMyProfile" action="myprofile" method="POST">
          <input type="hidden" name="todo" value="goToMyProfile">
          <input type="submit" value="Profile">
       </form>
-      <form name="logout" action="process" method="POST">
+      <form name="logout" action="logout" method="POST">
          <input type="hidden" name="todo" value="logout">
          <input type="submit" value="Logout">
       </form>               

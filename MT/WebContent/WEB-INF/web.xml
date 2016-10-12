@@ -21,10 +21,25 @@
     <url-pattern>/signup</url-pattern>
   </servlet-mapping>  
   <servlet-mapping>
-    <servlet-name>Test</servlet-name>
-    <url-pattern>/test</url-pattern>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/myprofile</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/createmt</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/profile/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>  
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

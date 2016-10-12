@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-      <form name="signUp" action="process" method="POST">
+      <form name="signUp" action="signup" method="POST">
       <table border="1" cellspacing="0" cellpadding="5">
          <tr>
          	<th colspan=2>Sign Up</th>
