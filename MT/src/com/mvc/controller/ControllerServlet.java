@@ -10,6 +10,7 @@ import com.mvc.data.Country;
 import com.mvc.data.MT;
 import com.mvc.data.User;
 import com.mvc.data.Interest;
+import com.mvc.data.Message;
 import com.mvc.tasks.SystemTasks;
 import com.mvc.tasks.UserTasks;
  
@@ -61,7 +62,10 @@ public class ControllerServlet extends HttpServlet {
 	        	  }
 	        	  else{
 	         		  nextPage = "/login.jsp";
-	         		  request.setAttribute("error", "Wrong Password");
+	         		  Message msg = new Message();
+	         		  msg.setMessageType("Danger");
+	         		  msg.setContent("Wrong Email or Password!");
+	         		  request.setAttribute("msg", msg);
 	         	  }
 	          }
     	  }
@@ -73,10 +77,21 @@ public class ControllerServlet extends HttpServlet {
     	  }
     	  else if (todo.equals("signup")){
     		  UserTasks usertasks = new UserTasks();
+        	  SystemTasks commontasks = new SystemTasks();
+    		  List<Country> countries= (ArrayList<Country>) commontasks.getCountries();
+    		  request.setAttribute("Countries", countries);
     		  boolean success =  usertasks.signUp(request);
-    		  if(success) request.setAttribute("message", "SignUp success, please login.");
-    		  else request.setAttribute("message", "SignUp failure, please try again.");
-     		  nextPage = "/login.jsp";
+     		  Message msg = new Message();
+    		  if(success){
+         		  msg.setMessageType("Success");
+         		  msg.setContent("SignUp success, please login.");    			  
+    		  }
+    		  else{
+         		  msg.setMessageType("Danger");
+         		  msg.setContent("SignUp failure, please try again.");       			  
+    		  }
+			  request.setAttribute("msg", msg);    		  
+     		  nextPage = "/signUp.jsp";
     	  }
     	  else if (todo.equals("cancelsignup")){
      		  nextPage = "/login.jsp";

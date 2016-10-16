@@ -3,11 +3,7 @@
   <servlet>
     <servlet-name>Controller</servlet-name>
     <servlet-class>com.mvc.controller.ControllerServlet</servlet-class>
-    </servlet>
-    <servlet>
-    <servlet-name>Test</servlet-name>
-    <servlet-class>mypkg.TestServlet</servlet-class>
-    </servlet>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Controller</servlet-name>
     <url-pattern>/process</url-pattern>
@@ -51,6 +47,6 @@
     <res-ref-name>jdbc/moneytransfer</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
-      <res-sharing-scope>Shareable</res-sharing-scope>    
+    <res-sharing-scope>Shareable</res-sharing-scope>    
 </resource-ref> 
 </web-app>

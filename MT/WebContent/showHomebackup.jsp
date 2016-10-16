@@ -82,7 +82,6 @@
          String interestedAll = "";
          
          for (MT item : smt) {
-        	 
         	 if(cor == 1){
                  emailSubmittedBy = item.getEmailSubmittedBy();
                  fromCountry = item.getFromCountry();
@@ -146,9 +145,7 @@
             <th>To Country</th>
             <th>Before Date</th>
             <th>Amount</th>
-            <th>Interested?<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button></th> 
+            <th>Interested?</th> 
          </tr>
          <%
          List<MT> mmt = (List<MT>) session.getAttribute("matchedMTs");
@@ -236,22 +233,22 @@
       <form name="logout" action="logout" method="POST">
          <input type="hidden" name="todo" value="logout">
       </form>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Select To Share Number</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Share Number</button>
-      </div>
-    </div>
-  </div>
-</div>                 
+		<div class="modal fade" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Select to Share Number</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>One fine body&hellip;</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->                     
 </body>
 </html>

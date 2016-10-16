@@ -257,7 +257,7 @@ public class QueryExecutor {
         try {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
-            String query = "INSERT INTO users (firstname, lastname, email, password) VALUES ('"+userData[1]+"','"+userData[2]+"', '"+userData[3]+"','"+userData[4]+"')";
+            String query = "INSERT INTO users (firstname, lastname, email, password, idcountry) VALUES ('"+userData[1]+"','"+userData[2]+"', '"+userData[3]+"','"+userData[4]+"',"+userData[5]+")";
             int rows = statement.executeUpdate(query);
             return true;
         	} 

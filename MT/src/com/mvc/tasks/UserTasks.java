@@ -59,7 +59,7 @@ public class UserTasks {
 	}	
 */
 	public boolean signUp(HttpServletRequest request) {
-		String signUpData[] = new String[5];
+		String signUpData[] = new String[6];
 		signUpData[0] = request.getParameter("firstname");
 		signUpData[1] = request.getParameter("lastname");
 		signUpData[2] = request.getParameter("email");
