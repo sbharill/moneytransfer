@@ -37,6 +37,7 @@ public class ControllerServlet extends HttpServlet {
       //List<CartItem> theCart = (ArrayList<CartItem>) session.getAttribute("cart");
       User currUser = (User) session.getAttribute("user");
       if(currUser == null){
+    	  System.out.println("here1");
     	  String todo = request.getParameter("todo");
     	  if(todo == null){
     		  nextPage = "/login.jsp";
@@ -98,6 +99,7 @@ public class ControllerServlet extends HttpServlet {
     	  }    	  
       }
       else{
+    	  System.out.println("here2");
     	  String todo = request.getParameter("todo");
     	  if(todo == null){
     		  nextPage = "/login.jsp";
@@ -167,7 +169,10 @@ public class ControllerServlet extends HttpServlet {
     	  else if (todo.equals("logout")){
     		  session.invalidate();
     		  nextPage = "/login.jsp";
-    	  }       	  
+    	  }
+    	  else{
+    		  nextPage = "/showHome.jsp";
+    	  }
  	  }
       ServletContext servletContext = getServletContext();
       RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(nextPage);

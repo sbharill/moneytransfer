@@ -91,11 +91,11 @@
                  amount = item.getAmount();  
                  interested = item.getInterested();
                  idInterested = item.getIdInterested();                 
-                 interestedAll = "<form name=\"goToUserProfile\" action=\"profile/"+item.getInterested()+"\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+idInterested+"\"><button type=\"submit\" class=\"btn btn-link\">"+interested+"</button></form>";  
+                 interestedAll = idInterested+"-"+interested;  
         	 }
         	 else{
 	        	 if(emailSubmittedBy.equals(item.getEmailSubmittedBy()) && fromCountry.equals(item.getFromCountry()) && toCountry.equals(item.getToCountry()) && beforeDateMT.equals(item.getBeforeDateMT()) && amount == item.getAmount()){
-	        		 interestedAll = interestedAll + "," + "<form name=\"goToUserProfile\" action=\"profile/"+item.getInterested()+"\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+item.getIdInterested()+"\"><button type=\"submit\" class=\"btn btn-link\">"+item.getInterested()+"</button></form>";
+	        		 interestedAll = interestedAll + "," + item.getIdInterested()+"-"+item.getInterested();
 	        	 }
 	        	 else{
 			         %>
@@ -128,7 +128,7 @@
 		            <td><%= toCountry%></td>
 		            <td><%= beforeDateMT%></td>
 		            <td><%= amount%></td> 
-		            <td><%= interestedAll%></td>                                    
+		            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="<%= interestedAll%>">See Interested</button></td>                                    
 		          </tr>
 		         <%        		 
         	 }
@@ -146,9 +146,7 @@
             <th>To Country</th>
             <th>Before Date</th>
             <th>Amount</th>
-            <th>Interested?<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button></th> 
+            <th>Interested?</th> 
          </tr>
          <%
          List<MT> mmt = (List<MT>) session.getAttribute("matchedMTs");
@@ -236,22 +234,45 @@
       <form name="logout" action="logout" method="POST">
          <input type="hidden" name="todo" value="logout">
       </form>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      </div>
+	</div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Select To Share Number</h4>
+        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
       </div>
       <div class="modal-body">
-        ...
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Share Number</button>
+        <button type="button" class="btn btn-primary">Send message</button>
       </div>
     </div>
   </div>
-</div>                 
+</div>
+<script language='javascript'>
+$('#exampleModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var recipient = button.data('whatever') // Extract info from data-* attributes
+	  var recipientS = recipient.split(",")
+	  var re = "<table class=\"table\">";
+	  for (i = 0; i < recipientS.length; i++) {
+		    var re2 = recipientS[i].split("-");
+		    re = re + "<tr><td><form name=\"goToUserProfile\" action=\"profile/"+re2[1]+"\" method=\"POST\"><input type=\"hidden\" name=\"todo\" value=\"goToUserProfile\"><input type=\"hidden\" name=\"idprofile\" value=\""+re2[0]+"\"><button type=\"submit\" class=\"btn btn-link\">"+re2[1]+"</button></form></td></tr>";
+		}
+	  re = re + "</table>"
+	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	  var modal = $(this)
+	  modal.find('.modal-body').html(re)
+	})
+</script>
+
+
 </body>
 </html>
